@@ -1,0 +1,227 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                            T R O K A M
+#                  Free and Open Source Search Engine
+#
+#  Service        http://trokam.com/search
+#  About          http://trokam.com/pages/about
+#  Development    http://dev.trokam.com/
+#  Repository     https://github.com/trokam
+#  News           https://twitter.com/trokam
+#
+#  Copyright (C) 2015, Nicolas Slusarenko
+#                      nicolas.slusarenko@trokam.com
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                      How to install Trokam server
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~
+Operating system
+~~~~~~~~~~~~~~~~
+
+These instructions are explained as executed in a GNU/Linux Ubuntu 14.04,
+however they could be adapted to any other GNU/Linux distribution.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Programs and libraries setup
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Trokam server needs these programs and libraries are installed in order
+to compile and run,
+
+    g++                       GNU C++ compiler
+    make                      An utility for Directing compilation
+    apache2                   Apache HTTP Server
+    libapache2-mod-fcgid      FastCGI interface module for Apache 2
+    libfcgi-dev               Header files of FastCGI
+    libfcgi0ldbl              Shared library of FastCGI
+    witty                     C++ library for webapps
+    witty-dev                 C++ library for webapps
+    libwtfcgi-dev             FastCGI connector library for Wt
+    libjsoncpp0               Library for reading and writing JSON for C++
+    libjsoncpp-dev            Library for reading and writing JSON for C++
+    postgresql                Object-relational SQL database
+    libpqxx-3.1               C++ library to connect to PostgreSQL
+    libpqxx3-dev              C++ library to connect to PostgreSQL (development files)
+    libboost-random-dev       Boost Random Number Library
+
+They could be installed with one command,
+
+    sudo aptitude install apache2 libapache2-mod-fcgid libfcgi-dev libfcgi0ldbl witty witty-dev libwtfcgi-dev libapache2-mod-fcgid g++ make libjsoncpp0 libjsoncpp-dev libpqxx-3.1 libpqxx3-dev libboost-random-dev postgresql
+
+~~~~~~~~~~~~~~~~~
+Directories setup
+~~~~~~~~~~~~~~~~~
+
+Library Wt (witty) needs an specific directory,
+
+    sudo mkdir /var/run/wt
+    sudo chown www-data:www-data /var/run/wt -R
+    sudo chmod a+wr -R /var/run/wt
+
+~~~~~~~~~~~~~~~~~~~~
+Apache configuration
+~~~~~~~~~~~~~~~~~~~~
+
+Verify that apache is running
+
+    service apache2 status
+     * apache2 is running
+
+Look for the file /etc/apache2/mods-available/fcgid.conf and save a copy,
+
+    cd /etc/apache2/mods-available/
+    sudo cp fcgid.conf fcgid.conf.original
+
+Then modify the contents of fcgid.conf into this,
+
+    <IfModule mod_mime.c>
+    AddHandler fcgid-script .fcgi
+    SocketPath /var/lib/apache2/fcgid/sock
+    </IfModule>
+
+    <Directory "/usr/local/bin/trokam/server/">
+        SetHandler fcgid-script
+        Options +ExecCGI
+        Order allow,deny
+        Allow from all
+        Require all granted
+    </Directory>
+
+Go to directory /etc/apache2/sites-available/ and save a copy of 000-default.conf
+
+    cd /etc/apache2/sites-available/
+    sudo cp 000-default.conf 000-default.conf.original
+
+Edit the file '000-default.conf' to add the lines between 'ScriptAlias ..'
+and </Directory>,
+
+    <VirtualHost *:80>
+            # The ServerName directive sets the request scheme, hostname and port that
+            # the server uses to identify itself. This is used when creating
+            # redirection URLs. In the context of virtual hosts, the ServerName
+            # specifies what hostname must appear in the request's Host: header to
+            # match this virtual host. For the default virtual host (this file) this
+            # value is not decisive as it is used as a last resort host regardless.
+            # However, you must set it for any further virtual host explicitly.
+            #ServerName www.example.com
+
+            ServerAdmin webmaster@localhost
+            DocumentRoot /var/www/html
+
+            ScriptAlias / /usr/local/bin/trokam/server
+            <Directory /usr/local/bin/trokam/server>
+                    SetHandler fcgid-script
+                    Options +ExecCGI
+                    Order allow,deny
+                    Allow from all
+            </Directory>
+
+            # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+
+Restart apache
+
+    sudo /etc/init.d/apache2 restart
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+PostgreSQL configuration
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Login as 'postgres' user
+
+    sudo su - postgres
+
+Go to the configuration directory of PostgreSQL and make a copy of 'pg_hba.conf',
+
+    cd /etc/postgresql/9.3/main/
+    cp pg_hba.conf pg_hba.conf.original
+
+Then modify 'pg_hba.conf' replacing one line as indicated,
+
+    # "local" is for Unix domain socket connections only
+    ##local   all             all                                     peer
+    local   all             all                                     trust
+
+Create the database and user for web data
+
+    createdb some_db
+    createuser some_user
+
+Logout as user 'postgres',
+
+    exit
+
+Restart postgres process,
+
+    sudo /etc/init.d/postgresql restart
+     * Restarting PostgreSQL 9.3 database server                                                                                  [ OK ] 
+
+Go to trokam/server/db and generate the model for the database using the
+same database name and user assigned at creation,
+
+    cd trokam/server/db
+    psql -U some_db -d some_user -f web_data.postgres
+    SET
+    SET
+    SET
+    SET
+    ..
+
+Copy the configuration template,
+
+    sudo mkdir /usr/local/etc/trokam
+    sudo cp trokam/server/config/server.cfg /usr/local/etc/trokam
+
+Edit 'server.cfg' and set the same database name and user assigned
+at creation,
+
+    [database]
+    name = some_db
+    user = some_user
+
+Make sure that directory '/usr/local/etc/trokam' and the
+file 'server.cfg' are be readabe by all users.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Compilation and installation of Trokam server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Got to 'trokam/server/' directory, compile and install,
+
+    cd trokam/server/
+    make clean all install
+
+If copiled without errors then the machine setup was right.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Initializing database with seed URLs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Initialize the database with seed URLs,
+
+    initialize --log-level=TRACE --seeds=(full path)/trokam/server/init/seed_urls_3M.txt
+
+In 'trokam/server/init' there are two files:
+
+    'seed_urls_3M.txt' with 3.614.441 URLs
+    'seed_urls_10K.txt' with 10.000 URLs
+
+The second is particularly useful for a quick testing.
+
+~~~~~~~~~~~~
+Your opinion
+~~~~~~~~~~~~
+
+If you find errors in these instructions, want to suggest improvements
+or send your opinion, please write to 'nicolas.slusarenko@trokam.com'

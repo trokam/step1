@@ -1,0 +1,71 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                            T R O K A M
+#                  Free and Open Source Search Engine
+#
+#  Service        http://trokam.com/search
+#  About          http://trokam.com/pages/about
+#  Development    http://dev.trokam.com/
+#  Repository     https://github.com/trokam
+#  News           https://twitter.com/trokam
+#
+#  Copyright (C) 2015, Nicolas Slusarenko
+#                      nicolas.slusarenko@trokam.com
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~
+About Trokam
+~~~~~~~~~~~~
+
+Trokam is an on going project to develop an online search engine.
+Its ads-free and all the code of Trokam is available under GLP v2.
+You could try it at,
+
+    http://trokam.com/search
+
+Learn more,
+
+    http://trokam.com/pages/about
+
+~~~~~~~~~~~~~
+Collaboration
+~~~~~~~~~~~~~
+
+Trokam has a server which is feed continously by clients,
+the "web crunchers" or "crunchers" for short.
+
+In these files you have all you need to build and install
+a server and the crunchers.
+
+It would be of great help to the project that you compile, install and
+try them.
+
+Instructions for the server are in 'server/README' and for the cruncher
+in 'client/README'.
+
+Send your opinions, detected bugs and suggestions for improvement
+to 'nicolas.slusarenko@trokam.com'
+
+~~~~~~
+Donate
+~~~~~~
+
+The funding of Trokam depends only on donations.
+In the web site there are no advertisement.
+If you think that a free and open source search engine is a good
+idea, then I invite you to donate,
+
+    http://trokam.com/pages/donate
+
+Thanks,
+
+Nicolas

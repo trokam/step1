@@ -1,0 +1,88 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                            T R O K A M
+#                  Free and Open Source Search Engine
+#
+#  Service        http://trokam.com/search
+#  About          http://trokam.com/pages/about
+#  Development    http://dev.trokam.com/
+#  Repository     https://github.com/trokam
+#  News           https://twitter.com/trokam
+#
+#  Copyright (C) 2015, Nicolas Slusarenko
+#                      nicolas.slusarenko@trokam.com
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                     How to install a Trokam cruncher
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~
+Operating system
+~~~~~~~~~~~~~~~~
+
+These instructions are explained as executed in a GNU/Linux Ubuntu 14.04,
+however they could be adapted to any other GNU/Linux distribution.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Programs and libraries setup
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Trokam's crunchers needs these programs and libraries are installed
+in order to compile and run,
+
+    g++                       GNU C++ compiler
+    make                      An utility for Directing compilation
+    wget                      Retrieves files from the web
+    html2text                 Advanced HTML to text converter
+    libmagic-dev              File type determination library using "magic" numbers
+    libexttextcat-dev         Language detection library - development files
+    libexttextcat-data        Language detection library - data files
+    libjsoncpp0               Library for reading and writing JSON for C++
+    libjsoncpp-dev            Library for reading and writing JSON for C++
+    libboost-random-dev       Boost Random Number Library
+
+They could be installed with one command,
+
+    sudo aptitude install g++ make wget html2text libmagic-dev libexttextcat-dev libexttextcat-data libjsoncpp0 libjsoncpp-dev libboost-random-dev
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Compilation and installation of Trokam server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Got to 'trokam/client/' directory, compile and install,
+
+    cd trokam/client/
+    make clean all install
+
+If copiled without errors then the machine setup was right.
+
+~~~~~~~~~~~~~~~~~~
+Do some crunching!
+~~~~~~~~~~~~~~~~~~
+
+You would need to be registered at Trokam server to run,
+
+    cruncher --log-level=TRACE --page-limit=1
+    
+or use your own server setup,
+
+    cruncher --server-address=192.168.0.1 --log-level=TRACE --page-limit=1
+
+Where that IP address is just an example.
+
+~~~~~~~~~~~~
+Your opinion
+~~~~~~~~~~~~
+
+If you find errors in these instructions, want to suggest improvements
+or send your opinion, please write to 'nicolas.slusarenko@trokam.com'
