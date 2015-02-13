@@ -93,7 +93,7 @@ trokam::page_search::page_search(const Wt::WEnvironment& env,
     top_links->setHeaderCount(1);
     top_links->elementAt(0, 0)->addWidget(new Wt::WText("<a href=\"http://trokam.com/pages/search\">Search</a>"));
     top_links->elementAt(0, 1)->addWidget(new Wt::WText("<a href=\"http://trokam.com/pages/developers\">Developers</a>"));
-    top_links->elementAt(0, 2)->addWidget(new Wt::WText("<a href=\"http://trokam.com/pages/funding\">Funding</a>"));
+    top_links->elementAt(0, 2)->addWidget(new Wt::WText("<a href=\"http://trokam.com/pages/donate\">Donate</a>"));
     top_links->elementAt(0, 3)->addWidget(new Wt::WText("<a href=\"http://trokam.com/pages/acknowledgements\">Acknowledgements</a>"));
     top_links->elementAt(0, 4)->addWidget(new Wt::WText("<a href=\"http://trokam.com/pages/about\">About</a>"));
     root()->addWidget(top_links);
