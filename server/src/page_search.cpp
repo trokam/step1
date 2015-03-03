@@ -83,7 +83,6 @@ trokam::page_search::page_search(const Wt::WEnvironment& env,
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     /// External CCS
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Wt::WApplication::instance()->useStyleSheet("http://trial.trokam.com/pages/trokam_pages_x.ccs");
     Wt::WApplication::instance()->useStyleSheet("http://trokam.com/pages/trokam_pages.ccs");
 
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -92,10 +91,10 @@ trokam::page_search::page_search(const Wt::WEnvironment& env,
     Wt::WTable *top_links = new Wt::WTable();
     top_links->setHeaderCount(1);
     top_links->elementAt(0, 0)->addWidget(new Wt::WText("<a href=\"http://trokam.com/pages/search\">Search</a>"));
-    top_links->elementAt(0, 1)->addWidget(new Wt::WText("<a href=\"http://trokam.com/pages/developers\">Developers</a>"));
-    top_links->elementAt(0, 2)->addWidget(new Wt::WText("<a href=\"http://trokam.com/pages/donate\">Donate</a>"));
-    top_links->elementAt(0, 3)->addWidget(new Wt::WText("<a href=\"http://trokam.com/pages/acknowledgements\">Acknowledgements</a>"));
-    top_links->elementAt(0, 4)->addWidget(new Wt::WText("<a href=\"http://trokam.com/pages/about\">About</a>"));
+    top_links->elementAt(0, 1)->addWidget(new Wt::WText("<a href=\"http://team.trokam.com/\">Team</a>"));
+    top_links->elementAt(0, 2)->addWidget(new Wt::WText("<a href=\"http://dev.trokam.com/\">Development</a>"));
+    top_links->elementAt(0, 3)->addWidget(new Wt::WText("<a href=\"http://team.trokam.com/?page_id=109\">Donate</a>"));
+    top_links->elementAt(0, 4)->addWidget(new Wt::WText("<a href=\"http://dev.trokam.com/?page_id=29\">About</a>"));
     root()->addWidget(top_links);
 
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -301,9 +300,13 @@ void trokam::page_search::generate_main()
     topheader->setStyleClass("topheader");
     vbox->addWidget(topheader, 1);
 
-    Wt::WText *tagline= new Wt::WText("<h2>Ads-Free and Open Source Search Engine</h2>");
+    Wt::WText *tagline= new Wt::WText("<h2>Free and Open Source Search Engine</h2>");
     tagline->setStyleClass("tagline");
     vbox->addWidget(tagline);
+
+    Wt::WText *campaign= new Wt::WText("<a href=\"http://igg.me/at/trokam/x/9934841\" style=\"font-weight:bold; color:green;\">Support the funding campaign at Indiegogo!</a>" "");
+    campaign->setStyleClass("tagline");
+    vbox->addWidget(campaign);
 
     Wt::WHBoxLayout *hbox = new Wt::WHBoxLayout();
     vbox->addLayout(hbox);
