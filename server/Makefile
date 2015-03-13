@@ -24,7 +24,7 @@
 
 CC=g++
 
-CPPFLAGS=-c -Wall -I./include -I../common/include -Wcpp 
+CPPFLAGS=-c -Wall -I./include -I../common/include -Wcpp
 
 LDFLAGS=-g
 
@@ -41,6 +41,13 @@ LDLIBS= -lboost_program_options \
         -lwt \
         -lwtfcgi
 
+LDLIBS_SHORT= -lboost_program_options \
+              -lboost_random \
+              -lfcgi \
+              -lboost_system \
+              -ljsoncpp \
+              -lpqxx \
+
 BIN=./bin
 COMMON_DIR=../common/src
 INSTALL_USER_BIN_DIR=/usr/local/bin/
@@ -51,7 +58,7 @@ INSTALL_SERVER_BIN_DIR=/usr/local/bin/trokam/server
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 SOURCES_ACTION= src/main_action.cpp \
-				src/action_processor.cpp \
+                src/action_processor.cpp \
                 src/db_handler.cpp \
                 src/options.cpp \
                 src/postgresql.cpp \
@@ -65,11 +72,30 @@ SOURCES_ACTION= src/main_action.cpp \
 OBJECTS_ACTION=$(SOURCES_ACTION:.cpp=.o)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# lookfor
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+SOURCES_LOOKFOR= src/main_lookfor.cpp \
+                 src/db_handler.cpp \
+                 src/lookfor.cpp \
+                 src/options.cpp \
+                 src/postgresql.cpp \
+                 src/render.cpp \
+                 src/server_log.cpp \
+                 $(COMMON_DIR)/converter.cpp \
+                 $(COMMON_DIR)/file_management.cpp \
+                 $(COMMON_DIR)/machine.cpp \
+                 $(COMMON_DIR)/random.cpp \
+                 $(COMMON_DIR)/token.cpp
+
+OBJECTS_LOOKFOR=$(SOURCES_LOOKFOR:.cpp=.o)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # search
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 SOURCES_SEARCH= src/main_search.cpp \
-				src/db_handler.cpp \
+                src/db_handler.cpp \
                 src/options.cpp \
                 src/page_search.cpp \
                 src/postgresql.cpp \
@@ -89,7 +115,7 @@ OBJECTS_SEARCH=$(SOURCES_SEARCH:.cpp=.o)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 SOURCES_INITIALIZE= src/main_initialize.cpp \
-					src/db_handler.cpp \
+                    src/db_handler.cpp \
                     src/options.cpp \
                     src/postgresql.cpp \
                     $(COMMON_DIR)/converter.cpp \
@@ -107,14 +133,17 @@ OBJECTS_INITIALIZE=$(SOURCES_INITIALIZE:.cpp=.o)
 
 all: server
 
-server: action search initialize
+server: lookfor action search initialize
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # individual recipes
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+lookfor: $(OBJECTS_LOOKFOR)
+	$(CC) $(LDFLAGS) $(OBJECTS_LOOKFOR) -o $(BIN)/$@ $(LDLIBS_SHORT)
+
 action: $(OBJECTS_ACTION)
-	$(CC) $(LDFLAGS) $(OBJECTS_ACTION) -o $(BIN)/$@ $(LDLIBS) 
+	$(CC) $(LDFLAGS) $(OBJECTS_ACTION) -o $(BIN)/$@ $(LDLIBS)
 
 search: $(OBJECTS_SEARCH)
 	$(CC) $(LDFLAGS) $(OBJECTS_SEARCH) -o $(BIN)/$@ $(LDLIBS)
@@ -131,10 +160,10 @@ DEPENDENCIES= $(OBJECTS:.o=.d)
 include $(DEPENDENCIES:.cpp=.d)
 
 %.d: %.cpp
-		@set -e; rm -f $@; \
-		$(CC) -M $(CPPFLAGS) $< > $@.$$$$; \
-		sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
-		rm -f $@.$$$$
+	@set -e; rm -f $@; \
+	$(CC) -M $(CPPFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
@@ -142,10 +171,12 @@ include $(DEPENDENCIES:.cpp=.d)
 .PHONY : install
 install :
 	sudo mkdir -p $(INSTALL_SERVER_BIN_DIR)
+	sudo cp ./bin/lookfor $(INSTALL_SERVER_BIN_DIR)
 	sudo cp ./bin/action $(INSTALL_SERVER_BIN_DIR)
 	sudo cp ./bin/search $(INSTALL_SERVER_BIN_DIR)
 	sudo mkdir -p $(INSTALL_USER_BIN_DIR)
 	sudo cp ./bin/initialize $(INSTALL_USER_BIN_DIR)
+	rsync -ravt ./theme/ /var/www/html/wp-content/themes/mod_flint/
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #

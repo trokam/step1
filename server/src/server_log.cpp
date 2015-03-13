@@ -43,6 +43,7 @@
  *
  *
  **********************************************************************/
+bool trokam::log::silence;
 trokam::severity trokam::log::display_min;
 trokam::format trokam::log::display_format;
 std::stringstream trokam::log::location;
@@ -74,8 +75,22 @@ void trokam::log::setup(trokam::options &opt)
  *
  *
  **********************************************************************/
+void trokam::log::quiet(bool value)
+{
+    silence= value;    
+}
+
+/***********************************************************************
+ *
+ *
+ **********************************************************************/
 void trokam::log::msg(trokam::severity level)
 {
+    if(silence == true)
+    {
+        return;        
+    }
+    
     if(level < display_min)
     {
         /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

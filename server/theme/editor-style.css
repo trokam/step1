@@ -1,0 +1,73 @@
+/*
+ * The style used for the TinyMCE editor for posts, pages, etc.
+ *
+ * @package Flint
+ * @since 1.3.0
+ */
+
+@import url("css/bootstrap.min.css");
+
+body {
+  padding: 1em;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+}
+body,
+button,
+input,
+select,
+textarea {
+  color: #404040;
+}
+b, strong {
+  font-weight: 700;
+}
+img, video {
+  max-width: 100%;
+  height: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+h1, h2, h3,
+h4, h5, h6,
+.h1, .h2, .h3,
+.h4, .h5, .h6 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+}
+
+/* Alignment */
+.alignleft {
+  display: inline;
+  float: left;
+  margin-right: 1.5em;
+}
+.alignright {
+  display: inline;
+  float: right;
+  margin-left: 1.5em;
+}
+.aligncenter {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  clear: both;
+}
+.alignnone {
+  clear: both;
+}
+
+img {
+  max-width: 98%;
+  padding: 1%;
+  padding: 4px;
+  line-height: 1.428571429;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-transition: all 0.2s ease-in-out;
+          transition: all 0.2s ease-in-out;
+}
+.collapse {
+  display: block;
+}

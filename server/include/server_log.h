@@ -89,8 +89,10 @@ namespace trokam
             static std::stringstream report;
             static void setup(trokam::options &opt);
             static void msg(trokam::severity level);
+            static void quiet(bool value);
 
         private:
+            static bool silence;
             static FILE *log_file;
             static severity display_min;
             static format display_format;
