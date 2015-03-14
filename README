@@ -2,11 +2,9 @@
 #                            T R O K A M
 #                  Free and Open Source Search Engine
 #
-#  Service        http://trokam.com/search
-#  About          http://trokam.com/pages/about
-#  Development    http://dev.trokam.com/
+#  Service        http://trokam.com
+#  Development    http://dev.trokam.com
 #  Repository     https://github.com/trokam
-#  News           https://twitter.com/trokam
 #
 #  Copyright (C) 2015, Nicolas Slusarenko
 #                      nicolas.slusarenko@trokam.com
@@ -30,11 +28,7 @@ Trokam is an on going project to develop an online search engine.
 Its ads-free and all the code of Trokam is available under GLP v2.
 You could try it at,
 
-    http://trokam.com/search
-
-Learn more,
-
-    http://trokam.com/pages/about
+    http://trokam.com/
 
 ~~~~~~~~~~~~~
 Collaboration
@@ -63,8 +57,6 @@ The funding of Trokam depends only on donations.
 In the web site there are no advertisement.
 If you think that a free and open source search engine is a good
 idea, then I invite you to donate,
-
-    http://trokam.com/pages/donate
 
 Thanks,
 

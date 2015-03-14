@@ -2,11 +2,9 @@
  *                            T R O K A M
  *                 Free and Open Source Search Engine
  *
- * Service        http://trokam.com/search
- * About          http://trokam.com/pages/about
- * Development    http://dev.trokam.com/
+ * Service        http://trokam.com
+ * Development    http://dev.trokam.com
  * Repository     https://github.com/trokam
- * News           https://twitter.com/trokam
  *
  * Copyright (C) 2015, Nicolas Slusarenko
  *                     nicolas.slusarenko@trokam.com
