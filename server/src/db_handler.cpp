@@ -864,10 +864,7 @@ void trokam::db_handler::fill_with_urls_in_file(std::string file_name)
 }
 
 /***********************************************************************
- * IMPROVEMENT: This report of URL could include also the date of
- *              insertion into the data, date of crunching, download
- *              status, level and a sequence of parents up to the
- *              seed.  
+ * 
  **********************************************************************/
 void trokam::db_handler::get_report_of_url(const std::string &url_index,
                                                  std::string &answer)
@@ -879,15 +876,9 @@ void trokam::db_handler::get_report_of_url(const std::string &url_index,
     get_title(url_index, title);
     get_body(url_index, body);
     get_word_rank(url_index, word_rank);
-    get_urls(url_index, urls);
 
     boost::replace_all(title, " & ", " and ");
-
-    answer=  "-----\n";
-    answer+= "index\n";
-    answer+= "-----\n\n";
-    answer+= url_index + "\n\n";
-
+    
     answer+= "---\n";
     answer+= "URL\n";
     answer+= "---\n\n";
@@ -897,14 +888,10 @@ void trokam::db_handler::get_report_of_url(const std::string &url_index,
     answer+= "TITLE\n";
     answer+= "-----\n\n";
     answer+= title + "\n\n";
-    
-    answer+= "--------------\n";
-    answer+= "RELEVANT WORDS\n";
-    answer+= "--------------\n\n";
 
-    answer+= "+-------------------------+\n";    
-    answer+= "|   word      |    ratio  |\n";
-    answer+= "+-------------------------+\n";    
+    answer+= "+-----------------------------+\n";    
+    answer+= "|   word      |    relevance  |\n";
+    answer+= "+-----------------------------+\n";    
     
     for(pqxx::result::const_iterator col= word_rank->begin();
         col != word_rank->end();   
@@ -920,23 +907,6 @@ void trokam::db_handler::get_report_of_url(const std::string &url_index,
         answer+= line + "\n";
     }
     answer+= "\n";
-
-    answer+= "-----\n";
-    answer+= "LINKS\n";
-    answer+= "-----\n\n";    
-    for(pqxx::result::const_iterator col= urls->begin();
-        col != urls->end();   
-        col++)
-    {
-        std::string line= col[0].as(std::string());
-        answer+= line + "\n";
-    }
-    answer+= "\n";
-    
-    answer+= "--------------\n";
-    answer+= "BODY (partial)\n";
-    answer+= "--------------\n";
-    answer+= body + "\n";
 }
 
 /***********************************************************************
