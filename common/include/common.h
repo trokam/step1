@@ -27,7 +27,7 @@
 /// Server address
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#define SERVER            "http://www.trokam.com/action"
+#define SERVER            "http://trokam.com/proc/action"
 
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /// Configuration files

@@ -58,7 +58,7 @@ trokam::action_handler::action_handler(trokam::options &opt)
 {
     if(opt.server_address() != "")
     {
-        server_address= "http://" + opt.server_address() + "/action";
+        server_address= "http://" + opt.server_address() + "/proc/action";
     }
     else
     {
