@@ -41,9 +41,9 @@
                     }
 
                     /***************************************************
-                     * The funtion called when the button 'audit'
-                     * is clicked.
-                     ***************************************************/
+                   * The funtion called when the button 'audit'
+                   * is clicked.
+                   ***************************************************/
                     function audit_on_server(event)
                     {
                         console.log("click on button audit");
@@ -73,9 +73,9 @@
                     }
 
                     /***************************************************
-                     * The funtion called when the button 'search'
-                     * is clicked.
-                     ***************************************************/
+                   * The funtion called when the button 'search'
+                   * is clicked.
+                   ***************************************************/
                     function search_on_server(event)
                     {
                         console.log("click on button search");
@@ -105,7 +105,16 @@
                                 {
                                     if (status == "success")
                                     {
-                                        document.getElementById("search_results").innerHTML= data;
+                                        if (data == "")
+                                        {
+                                            var no_results_message= "&nbsp;<br/><em>Well, this an ongoing project!<br/>";
+                                            no_results_message+= "No results by now.</em>";
+                                            document.getElementById("search_results").innerHTML= no_results_message;
+                                        }
+                                        else
+                                        {
+                                            document.getElementById("search_results").innerHTML= data;
+                                        }
                                     }
                                 });
 
@@ -114,9 +123,9 @@
                     }
 
                     /***************************************************
-                     * The funtion called when a key is pressed in the 
-                     * search box.
-                     ***************************************************/
+                   * The funtion called when a key is pressed in the 
+                   * search box.
+                   ***************************************************/
                     function review_input(event)
                     {
                         if(event.key == "Enter")
